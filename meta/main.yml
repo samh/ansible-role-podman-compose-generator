@@ -1,0 +1,62 @@
+galaxy_info:
+  author: Sam Hartsfield
+  description: install and manage rootless podman-compose, its configuration, and systemd service
+  company: N/A
+
+  # If the issue tracker for your role is not on github, uncomment the
+  # next line and provide a value
+  # issue_tracker_url: http://example.com/issue/tracker
+
+  # Using GPLv2 because I copied from
+  # https://github.com/IronicBadger/ansible-role-docker-compose-generator,
+  # which is GPLv2 according to meta/main.yml.
+  license: GPLv2
+
+  min_ansible_version: 2.1
+
+  #
+  # Provide a list of supported platforms, and for each platform a list of versions.
+  # If you don't wish to enumerate all versions for a particular platform, use 'all'.
+  # To view available platforms and versions (or releases), visit:
+  # https://galaxy.ansible.com/api/v1/platforms/
+  #
+  platforms:
+    - platforms:
+      - name: EL
+        versions:
+          - all
+    - name: Fedora
+      versions:
+        - all
+    - name: opensuse
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: SLES
+      versions:
+      - all
+    - name: GenericLinux
+      versions:
+      - all
+      - any
+    - name: Debian
+      versions:
+      - all
+
+  galaxy_tags:
+    - podman
+    - podman-compose
+    - rootless
+    - container
+    # List tags for your role here, one per line. A tag is a keyword that describes
+    # and categorizes the role. Users find roles by searching for tags. Be sure to
+    # remove the '[]' above, if you add tags to this list.
+    #
+    # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
+    #       Maximum 20 tags per role.
+
+dependencies: []
+  # List your role dependencies here, one per line. Be sure to remove the '[]' above,
+  # if you add dependencies to this list.
