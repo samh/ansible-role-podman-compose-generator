@@ -1,0 +1,19 @@
+# {{ ansible_managed }}
+# Initially based on https://techblog.jeppson.org/2020/04/create-podman-services-with-podman-compose/
+[Unit]
+Description=Start podman-compose
+Wants=network-online.target
+After=network.target
+
+[Service]
+Restart=always
+
+# Compose up
+ExecStart={{ podman_compose_bin }} -f {{ podman_compose_file }} up
+
+# Compose down, remove containers and volumes
+ExecStop={{ podman_compose_bin }} -f {{ podman_compose_file }} down -v
+TimeoutStopSec=70
+
+[Install]
+WantedBy=default.target
