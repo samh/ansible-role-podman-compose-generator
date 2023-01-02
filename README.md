@@ -56,6 +56,10 @@ If true, add a systemd user service to run this `podman-compose` file.
 
 The name of the systemd unit (`.service` will be added to it).
 
+    podman_compose_generator_service_description: "Start {{ podman_compose_generator_service_name }}"
+
+The "Description" added to the systemd unit file.
+
     podman_compose_generator_service_dir: "~/.config/systemd/user"
 
 The directory to create the systemd unit file.
