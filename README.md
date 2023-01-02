@@ -118,7 +118,9 @@ podman_compose_generator_add_service: true
 
 podman_compose_generator_containers:
   - service_name: duplicati
-    active: false
+    # Set 'active' to false to exclude this container from the config without
+    # having to comment it out.
+    active: true
     description: Duplicati service for restoring old backups
     image: lscr.io/linuxserver/duplicati:latest
     container_name: duplicati
