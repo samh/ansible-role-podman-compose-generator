@@ -155,10 +155,14 @@ services:
 {% endfor %}
 {% endif %}
 {% if container.env_file is defined %}
+{% if container.env_file is string %}
+    env_file: "{{ container.env_file }}"
+{% else %}
     env_file:
 {% for envfile in container.env_file %}
       - {{ envfile }}
 {% endfor %}
+{% endif %}
 {% endif %}
 {% if container.restart is defined %}
     restart: {{ container.restart }}
