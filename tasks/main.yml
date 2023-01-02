@@ -41,7 +41,7 @@
     - name: add podman-compose user service
       template:
         src: podman-compose.service.j2
-        dest: "{{ podman_service_dir }}/{{ podman_compose_generator_service_name }}.service"
+        dest: "{{ podman_compose_generator_service_dir }}/{{ podman_compose_generator_service_name }}.service"
         owner: "{{ podman_compose_generator_user }}"
         group: "{{ podman_compose_generator_group }}"
         mode: 0664

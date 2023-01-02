@@ -1,9 +1,9 @@
 # {{ ansible_managed }}
 # Template based on ironicbadger.ansible_role_docker_compose_generator
-version: "{{ compose_schema_version | default('3.5') }}"
+version: "{{ podman_compose_generator_schema_version }}"
 
 services:
-{% for container in compose_containers %}
+{% for container in podman_compose_generator_containers %}
 {% if container.active %}
 {% if container.description is defined %}
   # {{ container.description }}
