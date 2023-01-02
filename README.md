@@ -1,5 +1,5 @@
-Role Name
-=========
+Podman Compose Generator
+========================
 
 Pass this role a hash, and it will generate a `podman-compose.yml` file.
 This role is based on 
