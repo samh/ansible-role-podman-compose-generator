@@ -32,6 +32,10 @@ The user and group who runs rootless podman.
 
 If true, installs `podman-compose` using `pipx`.
 
+    podman_compose_generator_podman_compose_bin: "/home/{{ podman_user }}/.local/bin/podman-compose"
+
+Path to the `podman-compose` executable.
+
     podman_compose_generator_containers: []
 
 A list of container definitions.
