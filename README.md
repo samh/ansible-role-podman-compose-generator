@@ -15,14 +15,46 @@ Requirements
 Podman must be configured to run rootless. See
 [the rootless tutorial](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md).
 
-pipx must be installed.
+If `podman_compose_generator_install_podman_compose` is enabled, then
+[pipx](https://pypa.github.io/pipx/) must be installed.
 
 Role Variables
 --------------
 
-TODO
+Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+    podman_compose_generator_user: ""
+    podman_compose_generator_group: "{{ podman_compose_generator_user }}"
+
+The user and group who runs rootless podman.
+
+    podman_compose_generator_install_podman_compose: true
+
+If true, installs `podman-compose` using `pipx`.
+
+    podman_compose_generator_containers: []
+
+A list of container definitions.
+
+    podman_compose_generator_compose_file: "~/compose.yml"
+
+The path/filename of the generated compose file.
+
+    podman_compose_generator_schema_version: "3.5"
+
+The `version` used in the compose file.
+
+    podman_compose_generator_add_service: true
+
+If true, add a systemd user service to run this `podman-compose` file.
+
+    podman_compose_generator_service_name: podman-compose
+
+The name of the systemd unit (`.service` will be added to it).
+
+    podman_compose_generator_service_dir: "~/.config/systemd/user"
+
+The directory to create the systemd unit file.
 
 Dependencies
 ------------
@@ -36,13 +68,63 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 Example Playbook
 ----------------
 
-TODO
+```yaml
+- hosts: servers
+  tasks:
+    - name: configure podman-compose
+      tags: [container, podman, compose]
+      block:
+        - import_role:
+            name: samh.podman_compose_generator
+```
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+To generate multiple compose files, pass in these variables for each instance:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```yaml
+- hosts: servers
+  tasks:
+    - name: configure podman-compose for another service
+      tags: [container, podman, compose, another-service]
+      block:
+        - import_role:
+            name: samh.podman_compose_generator
+          vars:
+            podman_compose_generator_containers: "{{ another_service_containers }}"
+            podman_compose_generator_compose_file: "~/another-service-compose.yml"
+            podman_compose_generator_service_name: "another-service"
+```
+
+Example Definitions
+-------------------
+
+Variables are normally added to `group_vars` / `host_vars`.
+
+```yaml
+podman_compose_generator_user: my_username
+#podman_compose_generator_group: my_group # if different from username
+
+# Install using pipx if enabled
+podman_compose_generator_install_podman_compose: true
+# Create a systemd user service
+podman_compose_generator_add_service: true
+
+podman_compose_generator_containers:
+  - service_name: duplicati
+    active: false
+    description: Duplicati service for restoring old backups
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=America/New_York
+    volumes:
+      - "{{ appdata_path }}/duplicati:/config"
+      - /media/backups:/backups
+    ports:
+      - 8200:8200
+    restart: unless-stopped
+```
 
 License
 -------
