@@ -6,6 +6,11 @@
     that:
       - podman_compose_generator_user is defined
       - podman_compose_generator_user != ""
+      # compose syntax is a mapping, but we expect a sequence.
+      # This should catch if someone copied and pasted from a
+      # docker-compose example without modifying.
+      # (maybe we could support mapping syntax directly later?)
+      - paperless_compose_containers is not mapping
 
 # pipx module was added in community.general 3.8.0
 # https://github.com/ansible-collections/community.general/pull/3507
@@ -24,7 +29,7 @@
   become: yes
   become_user: "{{ podman_compose_generator_user }}"
   block:
-    - name: deploy podman-compose.yml
+    - name: deploy podman compose file
       template:
         src: compose.yml.j2
         dest: "{{ podman_compose_generator_compose_file }}"
@@ -32,15 +37,15 @@
         group: "{{ podman_compose_generator_group }}"
         mode: 0600
       notify:
-        - restart podman-compose
+        - restart podman-compose service
 
-- name: add podman-compose user service
+- name: "{{ podman_compose_generator_service_name }} user service"
   tags: [container, podman, compose, systemd]
   become: yes
   become_user: "{{ podman_compose_generator_user }}"
   when: podman_compose_generator_add_service
   block:
-    - name: add podman-compose user service
+    - name: add {{ podman_compose_generator_service_name }} user service
       template:
         src: podman-compose.service.j2
         dest: "{{ podman_compose_generator_service_dir }}/{{ podman_compose_generator_service_name }}.service"
@@ -49,9 +54,9 @@
         mode: 0664
       notify:
         - reload systemd user services
-        - restart podman-compose
+        - restart podman-compose service
 
-    - name: configure podman-compose user service
+    - name: configure {{ podman_compose_generator_service_name }} user service
       when: podman_compose_generator_add_service
       ansible.builtin.systemd:
         name: podman-compose
