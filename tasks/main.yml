@@ -29,7 +29,7 @@
   become: yes
   become_user: "{{ podman_compose_generator_user }}"
   block:
-    - name: deploy podman compose file
+    - name: deploy podman-compose file {{ podman_compose_generator_compose_file }}
       template:
         src: compose.yml.j2
         dest: "{{ podman_compose_generator_compose_file }}"
@@ -37,7 +37,7 @@
         group: "{{ podman_compose_generator_group }}"
         mode: 0600
       notify:
-        - restart podman-compose service
+        - "restart {{ podman_compose_generator_service_name }}.service"
 
 - name: "{{ podman_compose_generator_service_name }} user service"
   tags: [container, podman, compose, systemd]
@@ -45,7 +45,7 @@
   become_user: "{{ podman_compose_generator_user }}"
   when: podman_compose_generator_add_service
   block:
-    - name: add {{ podman_compose_generator_service_name }} user service
+    - name: add user service {{ podman_compose_generator_service_name }}.service
       template:
         src: podman-compose.service.j2
         dest: "{{ podman_compose_generator_service_dir }}/{{ podman_compose_generator_service_name }}.service"
@@ -54,12 +54,12 @@
         mode: 0664
       notify:
         - reload systemd user services
-        - restart podman-compose service
+        - "restart {{ podman_compose_generator_service_name }}.service"
 
-    - name: configure {{ podman_compose_generator_service_name }} user service
+    - name: configure user service {{ podman_compose_generator_service_name }}.service
       when: podman_compose_generator_add_service
       ansible.builtin.systemd:
-        name: podman-compose
+        name: "{{ podman_compose_generator_service_name }}"
         state: started
         enabled: true
         scope: user
