@@ -24,20 +24,16 @@
       community.general.pipx:
         name: podman-compose
 
-- name: configure podman-compose
+- name: deploy podman-compose file {{ podman_compose_generator_compose_file }}
   tags: [container, podman, compose]
-  become: yes
-  become_user: "{{ podman_compose_generator_user }}"
-  block:
-    - name: deploy podman-compose file {{ podman_compose_generator_compose_file }}
-      template:
-        src: compose.yml.j2
-        dest: "{{ podman_compose_generator_compose_file }}"
-        owner: "{{ podman_compose_generator_user }}"
-        group: "{{ podman_compose_generator_group }}"
-        mode: 0600
-      notify:
-        - "restart {{ podman_compose_generator_service_name }}.service"
+  template:
+    src: compose.yml.j2
+    dest: "{{ podman_compose_generator_compose_file }}"
+    owner: "{{ podman_compose_generator_user }}"
+    group: "{{ podman_compose_generator_group }}"
+    mode: 0600
+  notify:
+    - "restart {{ podman_compose_generator_service_name }}.service"
 
 - name: "{{ podman_compose_generator_service_name }} user service"
   tags: [container, podman, compose, systemd]
