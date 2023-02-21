@@ -11,6 +11,8 @@ podman_compose_generator_schema_version: "3.5"
 podman_compose_generator_compose_template: "compose.yml.j2"
 podman_compose_generator_compose_file: "~/compose.yml"
 podman_compose_generator_add_service: true
+podman_compose_generator_service_start: true
+podman_compose_generator_service_enabled: true
 podman_compose_generator_service_name: podman-compose
 podman_compose_generator_service_description: "Start {{ podman_compose_generator_service_name }}"
 

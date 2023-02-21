@@ -9,7 +9,7 @@
     scope: user
 
 - name: "restart {{ podman_compose_generator_service_name }}.service"
-  when: podman_compose_generator_add_service
+  when: podman_compose_generator_add_service and podman_compose_generator_service_start
   become: yes
   become_user: "{{ podman_compose_generator_user }}"
   ansible.builtin.systemd:

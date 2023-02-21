@@ -57,6 +57,14 @@ The `version` used in the compose file.
 
 If true, add a systemd user service to run this `podman-compose` file.
 
+    podman_compose_generator_service_start: true
+
+If true, start the systemd service.
+
+    podman_compose_generator_service_enabled: true
+
+If true or false, set the service to be enabled or disabled. If null, leave it unchanged.
+
     podman_compose_generator_service_name: podman-compose
 
 The name of the systemd unit (`.service` will be added to it).
