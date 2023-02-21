@@ -40,6 +40,11 @@ Path to the `podman-compose` executable.
 
 A list of container definitions.
 
+    podman_compose_generator_compose_template: "compose.yml.j2"
+
+The template used to generate the compose file. May be used instead of
+`podman_compose_generator_containers` to deploy a compose file directly.
+
     podman_compose_generator_compose_file: "~/compose.yml"
 
 The path/filename of the generated compose file.

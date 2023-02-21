@@ -27,7 +27,7 @@
 - name: deploy podman-compose file {{ podman_compose_generator_compose_file }}
   tags: [container, podman, compose]
   template:
-    src: compose.yml.j2
+    src: "{{ podman_compose_generator_compose_template }}"
     dest: "{{ podman_compose_generator_compose_file }}"
     owner: "{{ podman_compose_generator_user }}"
     group: "{{ podman_compose_generator_group }}"

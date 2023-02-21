@@ -8,6 +8,7 @@ podman_compose_generator_podman_compose_bin: "/home/{{ podman_user }}/.local/bin
 
 podman_compose_generator_containers: []
 podman_compose_generator_schema_version: "3.5"
+podman_compose_generator_compose_template: "compose.yml.j2"
 podman_compose_generator_compose_file: "~/compose.yml"
 podman_compose_generator_add_service: true
 podman_compose_generator_service_name: podman-compose
