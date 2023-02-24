@@ -30,7 +30,11 @@ The user and group who runs rootless podman.
 
     podman_compose_generator_install_podman_compose: true
 
-If true, installs `podman-compose` using `pipx`.
+If true, installs `podman-compose`.
+
+    podman_compose_generator_install_podman_compose_method: 'package'
+
+Install `podman-compose` via system package (`package`) or `pipx`.
 
     podman_compose_generator_podman_compose_bin: "/home/{{ podman_user }}/.local/bin/podman-compose"
 
