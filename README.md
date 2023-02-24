@@ -36,7 +36,7 @@ If true, installs `podman-compose`.
 
 Install `podman-compose` via system package (`package`) or `pipx`.
 
-    podman_compose_generator_podman_compose_bin: "/home/{{ podman_user }}/.local/bin/podman-compose"
+    podman_compose_generator_podman_compose_bin: "podman-compose"
 
 Path to the `podman-compose` executable.
 

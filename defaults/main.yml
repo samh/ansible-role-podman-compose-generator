@@ -5,7 +5,7 @@ podman_compose_generator_group: "{{ podman_compose_generator_user }}"
 
 podman_compose_generator_install_podman_compose: true
 podman_compose_generator_install_podman_compose_method: 'package'
-podman_compose_generator_podman_compose_bin: "/home/{{ podman_user }}/.local/bin/podman-compose"
+podman_compose_generator_podman_compose_bin: "podman-compose"
 
 podman_compose_generator_containers: []
 podman_compose_generator_schema_version: "3.5"
